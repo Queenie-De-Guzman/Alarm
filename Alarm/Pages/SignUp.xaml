@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Alarm.Pages.SignUp"
+             Title="SignUp">
+
+    <VerticalStackLayout Padding="20" Spacing="15" VerticalOptions="Center">
+
+        <Image Source="app_logo.png" WidthRequest="100" HeightRequest="100" HorizontalOptions="Center"/>
+
+        <Label Text="Create an Account" FontSize="28" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center"/>
+
+        <Entry x:Name="FullNameEntry" Placeholder="Full Name" FontSize="18" BackgroundColor="LightGray" Margin="0,10"/>
+        <Entry x:Name="EmailEntry" Placeholder="Email" Keyboard="Email" FontSize="18" BackgroundColor="LightGray" Margin="0,10"/>
+        <Entry x:Name="PasswordEntry" Placeholder="Password" IsPassword="True" FontSize="18" BackgroundColor="LightGray" Margin="0,10"/>
+        <Entry x:Name="ConfirmPasswordEntry" Placeholder="Confirm Password" IsPassword="True" FontSize="18" BackgroundColor="LightGray" Margin="0,10"/>
+
+        <Button Text="Sign Up" BackgroundColor="#9b6738" TextColor="White" FontSize="18" Clicked="OnSignUpClicked"/>
+
+        <HorizontalStackLayout HorizontalOptions="Center">
+            <Label Text="Already have an account?" FontSize="14" TextColor="Gray"/>
+            <Label Text="Login" FontSize="14" TextColor="Blue" FontAttributes="Bold">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnLoginTapped"/>
+                </Label.GestureRecognizers>
+            </Label>
+        </HorizontalStackLayout>
+
+    </VerticalStackLayout>
+</ContentPage>

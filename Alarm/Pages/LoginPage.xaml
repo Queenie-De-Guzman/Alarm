@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Alarm.Pages.LoginPage"
+             Title="LoginPage">
+
+    <VerticalStackLayout Padding="20" Spacing="15" VerticalOptions="Center">
+
+        <!-- App Logo -->
+        <Image Source="app_logo.png" WidthRequest="120" HeightRequest="120" HorizontalOptions="Center"/>
+
+
+        <!-- Email Entry -->
+        <Border StrokeShape="RoundRectangle 10" StrokeThickness="0" BackgroundColor="LightGray">
+            <Entry x:Name="EmailEntry" Placeholder="Email" Keyboard="Email" FontSize="18" 
+                   TextColor="Black" BackgroundColor="Transparent"
+                   SemanticProperties.Hint="Enter your email address"/>
+        </Border>
+
+        <!-- Password Entry -->
+        <Border StrokeShape="RoundRectangle 10" StrokeThickness="0" BackgroundColor="LightGray">
+            <Entry x:Name="PasswordEntry" Placeholder="Password" IsPassword="True" FontSize="18" 
+                   TextColor="Black" BackgroundColor="Transparent"
+                   SemanticProperties.Hint="Enter your password" IsTextPredictionEnabled="False"/>
+        </Border>
+
+        <!-- Login Button -->
+        <Button Text="Login" BackgroundColor="#9b6738" TextColor="White" FontSize="18"
+                Clicked="OnLoginClicked" CornerRadius="10"/>
+        <!-- Social Login Section -->
+        <Label Text="Or sign in with" FontSize="14" TextColor="Gray" HorizontalOptions="Center" VerticalOptions="Center" />
+
+        <Grid ColumnDefinitions="Auto, Auto" RowSpacing="10" ColumnSpacing="10" HorizontalOptions="Center" VerticalOptions="Center">
+            <!-- Google Login -->
+            <Button Grid.Column="0" Text="Google" BackgroundColor="White" BorderColor="Gray" FontSize="16"
+            TextColor="Black" Clicked="GoogleLoginClicked" CornerRadius="50" WidthRequest="100" HeightRequest="120"
+            HorizontalOptions="Center" VerticalOptions="Center">
+                <Button.ImageSource>
+                    <FileImageSource File="images/googleicon.png" />
+                </Button.ImageSource>
+            </Button>
+
+            <!-- Facebook Login -->
+            <Button Grid.Column="1" Text="Facebook" BackgroundColor="White" TextColor="White" FontSize="16"
+            Clicked="FacebookLoginClicked" CornerRadius="50" WidthRequest="100" HeightRequest="100"
+            HorizontalOptions="Center" VerticalOptions="Center">
+                <Button.ImageSource>
+                    <FileImageSource File="images/faceicon.png" />
+                </Button.ImageSource>
+            </Button>
+        </Grid>
+
+
+
+        <!-- Sign Up Option -->
+        <HorizontalStackLayout HorizontalOptions="Center">
+            <Label Text="Don't have an account?" FontSize="14" TextColor="Gray"/>
+            <Label Text="Sign up" FontSize="14" TextColor="Blue" FontAttributes="Bold">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnSignUpTapped"/>
+                </Label.GestureRecognizers>
+            </Label>
+        </HorizontalStackLayout>
+
+    </VerticalStackLayout>
+
+</ContentPage>
