@@ -2,29 +2,104 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Alarm.Pages.SignUp"
+             BackgroundColor="#f8f9fa"
              Title="SignUp">
+    <ScrollView>
+        <VerticalStackLayout Padding="25" Spacing="20" VerticalOptions="Center">
+            <!-- App Logo -->
+            <Frame CornerRadius="60" HasShadow="False" BorderColor="Transparent" 
+                   BackgroundColor="White" Padding="0" HeightRequest="120" WidthRequest="120" 
+                   HorizontalOptions="Center" IsClippedToBounds="True">
+                <Image Source="app_logo.png" Aspect="AspectFill"/>
+            </Frame>
 
-    <VerticalStackLayout Padding="20" Spacing="15" VerticalOptions="Center">
+            <!-- Create Account Header -->
+            <Label Text="Create Account" FontSize="28" FontAttributes="Bold" 
+                   TextColor="#333333" HorizontalOptions="Center" Margin="0,10,0,20"/>
 
-        <Image Source="app_logo.png" WidthRequest="100" HeightRequest="100" HorizontalOptions="Center"/>
+            <!-- Full Name Entry -->
+            <Frame CornerRadius="12" HasShadow="False" BackgroundColor="White" Padding="15,0">
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10" HeightRequest="55">
+                    <Label Grid.Column="0" Text="👤" FontSize="20" VerticalOptions="Center"/>
+                    <Entry Grid.Column="1" x:Name="FullNameEntry" Placeholder="Full Name" 
+                           FontSize="16" TextColor="#333333" PlaceholderColor="#AAAAAA" 
+                           BackgroundColor="Transparent" VerticalOptions="Center"/>
+                </Grid>
+            </Frame>
 
-        <Label Text="Create an Account" FontSize="28" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center"/>
+            <!-- Email Entry -->
+            <Frame CornerRadius="12" HasShadow="False" BackgroundColor="White" Padding="15,0">
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10" HeightRequest="55">
+                    <Label Grid.Column="0" Text="✉️" FontSize="20" VerticalOptions="Center"/>
+                    <Entry Grid.Column="1" x:Name="EmailEntry" Placeholder="Email" 
+                           Keyboard="Email" FontSize="16" TextColor="#333333" 
+                           PlaceholderColor="#AAAAAA" BackgroundColor="Transparent"
+                           VerticalOptions="Center"/>
+                </Grid>
+            </Frame>
 
-        <Entry x:Name="FullNameEntry" Placeholder="Full Name" FontSize="18" BackgroundColor="LightGray" Margin="0,10"/>
-        <Entry x:Name="EmailEntry" Placeholder="Email" Keyboard="Email" FontSize="18" BackgroundColor="LightGray" Margin="0,10"/>
-        <Entry x:Name="PasswordEntry" Placeholder="Password" IsPassword="True" FontSize="18" BackgroundColor="LightGray" Margin="0,10"/>
-        <Entry x:Name="ConfirmPasswordEntry" Placeholder="Confirm Password" IsPassword="True" FontSize="18" BackgroundColor="LightGray" Margin="0,10"/>
+            <!-- Password Entry -->
+            <Frame CornerRadius="12" HasShadow="False" BackgroundColor="White" Padding="15,0">
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10" HeightRequest="55">
+                    <Label Grid.Column="0" Text="🔒" FontSize="20" VerticalOptions="Center"/>
+                    <Entry Grid.Column="1" x:Name="PasswordEntry" Placeholder="Password" 
+                           IsPassword="True" FontSize="16" TextColor="#333333" 
+                           PlaceholderColor="#AAAAAA" BackgroundColor="Transparent"
+                           IsTextPredictionEnabled="False" VerticalOptions="Center"/>
+                </Grid>
+            </Frame>
 
-        <Button Text="Sign Up" BackgroundColor="#9b6738" TextColor="White" FontSize="18" Clicked="OnSignUpClicked"/>
+            <!-- Confirm Password Entry -->
+            <Frame CornerRadius="12" HasShadow="False" BackgroundColor="White" Padding="15,0">
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10" HeightRequest="55">
+                    <Label Grid.Column="0" Text="🔒" FontSize="20" VerticalOptions="Center"/>
+                    <Entry Grid.Column="1" x:Name="ConfirmPasswordEntry" Placeholder="Confirm Password" 
+                           IsPassword="True" FontSize="16" TextColor="#333333" 
+                           PlaceholderColor="#AAAAAA" BackgroundColor="Transparent"
+                           IsTextPredictionEnabled="False" VerticalOptions="Center"/>
+                </Grid>
+            </Frame>
 
-        <HorizontalStackLayout HorizontalOptions="Center">
-            <Label Text="Already have an account?" FontSize="14" TextColor="Gray"/>
-            <Label Text="Login" FontSize="14" TextColor="Blue" FontAttributes="Bold">
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="OnLoginTapped"/>
-                </Label.GestureRecognizers>
-            </Label>
-        </HorizontalStackLayout>
+            <!-- Terms and Privacy Policy - FIXED VERSION -->
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="5" Margin="0,10">
+                <CheckBox Grid.Column="0" x:Name="AgreeCheckbox" Color="#9b6738" VerticalOptions="Start"/>
+                <VerticalStackLayout Grid.Column="1" Spacing="0">
+                    <Label Text="I agree to the Terms of Service and Privacy Policy" 
+                           FontSize="14" TextColor="#666666" LineBreakMode="WordWrap">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="I agree to the " TextColor="#666666"/>
+                                <Span Text="Terms of Service" TextColor="#9b6738" FontAttributes="Bold">
+                                    <Span.GestureRecognizers>
+                                        <TapGestureRecognizer />
+                                    </Span.GestureRecognizers>
+                                </Span>
+                                <Span Text=" and " TextColor="#666666"/>
+                                <Span Text="Privacy Policy" TextColor="#9b6738" FontAttributes="Bold">
+                                    <Span.GestureRecognizers>
+                                        <TapGestureRecognizer />
+                                    </Span.GestureRecognizers>
+                                </Span>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </VerticalStackLayout>
+            </Grid>
 
-    </VerticalStackLayout>
+            <!-- Sign Up Button -->
+            <Button Text="CREATE ACCOUNT" FontAttributes="Bold" FontSize="16" TextColor="White"
+                    BackgroundColor="#9b6738" CornerRadius="12" HeightRequest="55"
+                    Clicked="OnSignUpClicked" Margin="0,10,0,15"/>
+
+            <!-- Login Option -->
+            <HorizontalStackLayout HorizontalOptions="Center">
+                <Label Text="Already have an account? " FontSize="15" TextColor="#666666"/>
+                <Label Text="Login" FontSize="15" TextColor="#9b6738" FontAttributes="Bold">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnLoginTapped"/>
+                    </Label.GestureRecognizers>
+                </Label>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

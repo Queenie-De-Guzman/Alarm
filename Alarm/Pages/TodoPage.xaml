@@ -1,0 +1,243 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Alarm.Pages.TodoPage"
+             x:Name="TodoPage"
+             BackgroundColor="{AppThemeBinding Light=#F5F5F5, Dark=#1E1E1E}"
+             Title="Todo List">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="PrimaryColor">#7952B3</Color>
+            <Color x:Key="SecondaryColor">#9b6738</Color>
+            <Color x:Key="AccentColor">#4361EE</Color>
+            <Color x:Key="TextColor">#000000</Color>
+            <Color x:Key="BorderColor">#DDDDDD</Color>
+            <Color x:Key="SuccessColor">#4CAF50</Color>
+            <Color x:Key="DangerColor">#F44336</Color>
+
+            <Style TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource TextColor}" />
+                <Setter Property="FontFamily" Value="OpenSansRegular" />
+            </Style>
+
+            <Style TargetType="Button" x:Key="ActionButton">
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="CornerRadius" Value="8" />
+                <Setter Property="Padding" Value="15,10" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup Name="CommonStates">
+                            <VisualState Name="Normal" />
+                            <VisualState Name="Pressed">
+                                <VisualState.Setters>
+                                    <Setter Property="Scale" Value="0.95" />
+                                    <Setter Property="Opacity" Value="0.9" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+
+            <Style TargetType="Button" x:Key="AddButton" BasedOn="{StaticResource ActionButton}">
+                <Setter Property="BackgroundColor" Value="{StaticResource SecondaryColor}" />
+                <Setter Property="HorizontalOptions" Value="Fill" />
+            </Style>
+
+            <Style TargetType="Button" x:Key="DoneButton" BasedOn="{StaticResource ActionButton}">
+                <Setter Property="BackgroundColor" Value="{StaticResource SuccessColor}" />
+                <Setter Property="WidthRequest" Value="75" />
+                <Setter Property="FontSize" Value="14" />
+            </Style>
+
+            <Style TargetType="Button" x:Key="DeleteButton" BasedOn="{StaticResource ActionButton}">
+                <Setter Property="BackgroundColor" Value="{StaticResource DangerColor}" />
+                <Setter Property="WidthRequest" Value="75" />
+                <Setter Property="FontSize" Value="14" />
+            </Style>
+
+            <Style TargetType="Entry">
+                <Setter Property="BackgroundColor" Value="White" />
+                <Setter Property="TextColor" Value="{StaticResource TextColor}" />
+                <Setter Property="PlaceholderColor" Value="#AAAAAA" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="HeightRequest" Value="50" />
+                <Setter Property="VerticalOptions" Value="Center" />
+            </Style>
+
+            <!-- CardStyle definition added here -->
+            <Style TargetType="Frame" x:Key="CardStyle">
+                <Setter Property="BackgroundColor" Value="White" />
+                <Setter Property="CornerRadius" Value="12" />
+                <Setter Property="Padding" Value="15" />
+                <Setter Property="Margin" Value="0,6" />
+                <Setter Property="HasShadow" Value="True" />
+                <Setter Property="BorderColor" Value="Transparent" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,Auto,*" Padding="20" RowSpacing="20">
+        <!-- Header with Back Button -->
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto">
+            <Button Grid.Column="0" 
+                    Text="←" 
+                    FontSize="20"
+                    BackgroundColor="#F0F0F0" 
+                    TextColor="{StaticResource TextColor}"
+                    CornerRadius="25"
+                    WidthRequest="50" 
+                    HeightRequest="50"
+                    Clicked="OnBackButtonHome">
+                <Button.Shadow>
+                    <Shadow Brush="#AAAAAA" Opacity="0.3" Radius="8" Offset="0,2" />
+                </Button.Shadow>
+            </Button>
+
+            <Label Grid.Column="1" 
+                   Text="Todo List" 
+                   FontSize="28" 
+                   FontAttributes="Bold" 
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center" />
+
+            <ImageButton Grid.Column="2"
+                         Source="dotnet_bot.png"
+                         HeightRequest="32"
+                         WidthRequest="32"
+                         BackgroundColor="Transparent"
+                         CornerRadius="16"
+                         Padding="4"
+                          Clicked="MenuPage"/>
+        </Grid>
+
+        <!-- Add Todo Section -->
+        <Frame Grid.Row="1" Style="{StaticResource CardStyle}">
+            <VerticalStackLayout Spacing="15">
+                <Label Text="Add New Task" 
+                       FontSize="20" 
+                       FontAttributes="Bold" 
+                       HorizontalOptions="Start" />
+
+                <Border Stroke="{StaticResource BorderColor}" 
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 8,8,8,8">
+                    <Grid ColumnDefinitions="*,Auto" Padding="5,0">
+                        <Entry x:Name="TodoEntry" 
+                               Placeholder="What needs to be done?" 
+                               Grid.Column="0"
+                               Margin="10,0" />
+
+                        <Button Text="Add"
+                                Style="{StaticResource AddButton}"
+                                Clicked="OnAddTodoClicked"
+                                Grid.Column="1"
+                                Margin="0,5"
+                                HeightRequest="40"
+                                WidthRequest="80" />
+                    </Grid>
+                </Border>
+            </VerticalStackLayout>
+        </Frame>
+
+        <!-- Todo List -->
+        <Frame Grid.Row="2" Style="{StaticResource CardStyle}" Padding="15">
+            <Grid RowDefinitions="Auto,*">
+                <Label Text="Your Tasks" 
+                       FontSize="20" 
+                       FontAttributes="Bold"
+                       Grid.Row="0"
+                       Margin="0,0,0,10" />
+
+                <CollectionView x:Name="TodoListView" 
+                                ItemsSource="{Binding TodoItems}"
+                                Grid.Row="1"
+                                SelectionMode="None"
+                                EmptyView="No tasks added yet">
+                    <CollectionView.EmptyViewTemplate>
+                        <DataTemplate>
+                            <VerticalStackLayout VerticalOptions="Center" 
+                                                HorizontalOptions="Center" 
+                                                Padding="20">
+                                <Image Source="empty_tasks.png" 
+                                       HeightRequest="100" 
+                                       WidthRequest="100" 
+                                       Opacity="0.5" />
+                                <Label Text="No tasks yet" 
+                                       FontSize="18" 
+                                       HorizontalOptions="Center" 
+                                       Margin="0,20,0,0" 
+                                       TextColor="#888888" />
+                                <Label Text="Add your first task above" 
+                                       FontSize="14" 
+                                       HorizontalOptions="Center" 
+                                       TextColor="#888888" />
+                            </VerticalStackLayout>
+                        </DataTemplate>
+                    </CollectionView.EmptyViewTemplate>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <SwipeView>
+                                <SwipeView.RightItems>
+                                    <SwipeItems>
+                                        <SwipeItem Text="Delete"
+                                                   BackgroundColor="{StaticResource DangerColor}"
+                                                   Command="{Binding DeleteCommand}">
+                                            <SwipeItem.IconImageSource>
+                                                <FontImageSource FontFamily="MaterialIcons"
+                                                                Glyph="&#xe872;"
+                                                                Color="White" />
+                                            </SwipeItem.IconImageSource>
+                                        </SwipeItem>
+                                    </SwipeItems>
+                                </SwipeView.RightItems>
+
+                                <Border StrokeShape="RoundRectangle 10,10,10,10"
+                                        Stroke="{StaticResource BorderColor}"
+                                        StrokeThickness="1"
+                                        BackgroundColor="White"
+                                        Margin="0,5">
+                                    <Grid ColumnDefinitions="Auto,*,Auto,Auto" 
+                                          Padding="15,12" 
+                                          ColumnSpacing="10">
+                                        <!-- Checkbox -->
+                                        <CheckBox Grid.Column="0"
+                                                  IsChecked="{Binding IsDone}"
+                                                  Color="{StaticResource SuccessColor}"
+                                                  VerticalOptions="Center" />
+
+                                        <!-- Task Content -->
+                                        <VerticalStackLayout Grid.Column="1" Spacing="4">
+                                            <Label Text="{Binding Text}" 
+                                                   FontSize="16"
+                                                   TextDecorations="{Binding IsDone, Converter={StaticResource BoolToStrikethrough}}" />
+
+                                            <Label Text="{Binding Date, StringFormat='{0:MMM dd, yyyy - hh:mm tt}'}" 
+                                                   FontSize="12" 
+                                                   TextColor="Gray" />
+                                        </VerticalStackLayout>
+
+                                        <!-- Done Button -->
+                                        <Button Grid.Column="2" 
+                                                Text="Done"
+                                                Style="{StaticResource DoneButton}"
+                                                Command="{Binding MarkDoneCommand}"
+                                                IsVisible="{Binding IsDone, Converter={StaticResource InverseBoolConverter}}" />
+
+                                        <!-- Delete Button -->
+                                        <Button Grid.Column="3" 
+                                                Text="Delete"
+                                                Style="{StaticResource DeleteButton}"
+                                                Command="{Binding DeleteCommand}" />
+                                    </Grid>
+                                </Border>
+                            </SwipeView>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Grid>
+        </Frame>
+    </Grid>
+</ContentPage>

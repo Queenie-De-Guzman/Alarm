@@ -2,27 +2,134 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Alarm.Pages.HomePage"
+             BackgroundColor="#f8f9fa"
              Title="HomePage">
+    <ScrollView>
+        <VerticalStackLayout Padding="25" Spacing="25" VerticalOptions="Start">
+            <!-- Header Section with User Info -->
+            <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto" ColumnSpacing="15" Margin="0,10,0,20">
+                <!-- User Avatar -->
+                <Frame Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" 
+                       CornerRadius="35" HasShadow="False" HeightRequest="70" WidthRequest="70"
+                       Padding="0" IsClippedToBounds="True" BorderColor="Transparent">
+                    <Image Source="dotnet_bot.png" Aspect="AspectFill"/>
+                </Frame>
 
-    <VerticalStackLayout Padding="20" Spacing="15" VerticalOptions="Center">
+                <!-- Welcome Message -->
+                <Label Grid.Column="1" Grid.Row="0" x:Name="WelcomeLabel" 
+                       Text="Welcome back!" FontSize="24" FontAttributes="Bold" 
+                       TextColor="#333333" VerticalOptions="End"/>
 
-        <!-- App Logo -->
-        <Image Source="app_logo.png" WidthRequest="100" HeightRequest="100" HorizontalOptions="Center"/>
+                <!-- User Email -->
+                <Label Grid.Column="1" Grid.Row="1" x:Name="UserEmailLabel" 
+                       Text="user@example.com" FontSize="16" TextColor="#666666"
+                       VerticalOptions="Start"/>
+            </Grid>
 
-        <!-- Welcome Message -->
-        <Label x:Name="WelcomeLabel" Text="Welcome!" FontSize="24" FontAttributes="Bold" 
-               TextColor="Black" HorizontalOptions="Center"/>
+            <!-- Feature Buttons Grid -->
+            <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" 
+                  ColumnSpacing="15" RowSpacing="15">
 
-        <Label x:Name="UserEmailLabel" Text="user@example.com" FontSize="18" TextColor="Gray"
-               HorizontalOptions="Center"/>
+                <!-- Alarm Button -->
+                <Frame Grid.Column="0" Grid.Row="0" 
+                       BackgroundColor="White" CornerRadius="15" HasShadow="False"
+                       Padding="0" HeightRequest="160">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnAlarmClicked"/>
+                    </Frame.GestureRecognizers>
+                    <Grid RowDefinitions="Auto,*,Auto" Padding="15">
+                        <Frame Grid.Row="0" BackgroundColor="#FFF5E0" HeightRequest="40" WidthRequest="40"
+                               CornerRadius="10" Padding="0" HorizontalOptions="Start">
+                            <Label Text="⏰" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Frame>
+                        <Label Grid.Row="1" Text="Alarm" FontSize="20" FontAttributes="Bold" 
+                               TextColor="#333333" VerticalOptions="Center"/>
+                        <Label Grid.Row="2" Text="Set your alarms" FontSize="14" 
+                               TextColor="#666666" HorizontalOptions="Start"/>
+                    </Grid>
+                </Frame>
 
-        <!-- Logout Button -->
-        <Button Text="Logout" BackgroundColor="#9b6738" TextColor="White" FontSize="18"
-                Clicked="OnLogoutClicked"/>
-        <!-- Logout Button -->
-        <Button Text="Alarm" BackgroundColor="#9b6738" TextColor="White" FontSize="18"
-          Clicked="OnAlarmClicked"/>
+                <!-- Todo List Button -->
+                <Frame Grid.Column="1" Grid.Row="0" 
+                       BackgroundColor="White" CornerRadius="15" HasShadow="False"
+                       Padding="0" HeightRequest="160">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnTodoList"/>
+                    </Frame.GestureRecognizers>
+                    <Grid RowDefinitions="Auto,*,Auto" Padding="15">
+                        <Frame Grid.Row="0" BackgroundColor="#E0F2FF" HeightRequest="40" WidthRequest="40"
+                               CornerRadius="10" Padding="0" HorizontalOptions="Start">
+                            <Label Text="📝" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Frame>
+                        <Label Grid.Row="1" Text="Todo List" FontSize="20" FontAttributes="Bold" 
+                               TextColor="#333333" VerticalOptions="Center"/>
+                        <Label Grid.Row="2" Text="Manage your tasks" FontSize="14" 
+                               TextColor="#666666" HorizontalOptions="Start"/>
+                    </Grid>
+                </Frame>
 
+                <!-- Settings Button -->
+                <Frame Grid.Column="0" Grid.Row="1" 
+                       BackgroundColor="White" CornerRadius="15" HasShadow="False"
+                       Padding="0" HeightRequest="160">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer />
+                    </Frame.GestureRecognizers>
+                    <Grid RowDefinitions="Auto,*,Auto" Padding="15">
+                        <Frame Grid.Row="0" BackgroundColor="#F5E0FF" HeightRequest="40" WidthRequest="40"
+                               CornerRadius="10" Padding="0" HorizontalOptions="Start">
+                            <Label Text="⚙️" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Frame>
+                        <Label Grid.Row="1" Text="Settings" FontSize="20" FontAttributes="Bold" 
+                               TextColor="#333333" VerticalOptions="Center"/>
+                        <Label Grid.Row="2" Text="Customize app" FontSize="14" 
+                               TextColor="#666666" HorizontalOptions="Start"/>
+                    </Grid>
+                </Frame>
 
-    </VerticalStackLayout>
+                <!-- Logout Button -->
+                <Frame Grid.Column="1" Grid.Row="1" 
+                       BackgroundColor="White" CornerRadius="15" HasShadow="False"
+                       Padding="0" HeightRequest="160">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnLogoutClicked"/>
+                    </Frame.GestureRecognizers>
+                    <Grid RowDefinitions="Auto,*,Auto" Padding="15">
+                        <Frame Grid.Row="0" BackgroundColor="#FFE0E0" HeightRequest="40" WidthRequest="40"
+                               CornerRadius="10" Padding="0" HorizontalOptions="Start">
+                            <Label Text="🚪" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Frame>
+                        <Label Grid.Row="1" Text="Logout" FontSize="20" FontAttributes="Bold" 
+                               TextColor="#333333" VerticalOptions="Center"/>
+                        <Label Grid.Row="2" Text="Exit the app" FontSize="14" 
+                               TextColor="#666666" HorizontalOptions="Start"/>
+                    </Grid>
+                </Frame>
+            </Grid>
+
+            <!-- Recent Activity Section -->
+            <Label Text="Recent Activity" FontSize="18" FontAttributes="Bold" 
+                   TextColor="#333333" Margin="0,10,0,5"/>
+
+            <Frame BackgroundColor="White" CornerRadius="15" HasShadow="False" Padding="15">
+                <VerticalStackLayout Spacing="15">
+                    <HorizontalStackLayout Spacing="10">
+                        <Frame BackgroundColor="#E0F2FF" HeightRequest="30" WidthRequest="30"
+                               CornerRadius="15" Padding="0" VerticalOptions="Center">
+                            <Label Text="⏰" FontSize="16" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Frame>
+                        <Label Text="Alarm set for 7:00 AM" FontSize="16" TextColor="#333333" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="10">
+                        <Frame BackgroundColor="#F5E0FF" HeightRequest="30" WidthRequest="30"
+                               CornerRadius="15" Padding="0" VerticalOptions="Center">
+                            <Label Text="📝" FontSize="16" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Frame>
+                        <Label Text="3 tasks pending today" FontSize="16" TextColor="#333333" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

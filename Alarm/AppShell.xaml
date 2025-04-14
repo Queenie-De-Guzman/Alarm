@@ -6,7 +6,10 @@
     xmlns:local="clr-namespace:Alarm.Pages"
     Shell.FlyoutBehavior="Flyout"
     Title="Alarm">
-
+    <ShellContent
+       Title="Login"
+       ContentTemplate="{DataTemplate local:LoginPage}"
+       Route="LoginPage" />
 
     <ShellContent
         Title="SignUp"
@@ -18,9 +21,6 @@
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
    
-    <ShellContent
-        Title="Login"
-        ContentTemplate="{DataTemplate local:LoginPage}"
-        Route="LoginPage" />
+ 
 
 </Shell>

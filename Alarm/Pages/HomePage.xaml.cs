@@ -34,6 +34,11 @@ namespace Alarm.Pages
 			// Navigate to Alarm setup page or open alarm dialog
 			await Navigation.PushModalAsync(new AlarmPage());
 		}
+		private async void OnTodoList(object sender, EventArgs e)
+		{
+			// Example of navigating to a different page when the button is clicked
+			await Navigation.PushModalAsync(new TodoPage());
+		}
 	}
 }
 
