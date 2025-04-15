@@ -1,17 +1,16 @@
 ﻿using Android.App;
 using Android.Content;
-using Microsoft.Maui.Authentication;
 using Android.Content.PM;
+using Microsoft.Maui.Authentication;
 
 namespace Alarm.Platforms.Android
 {
-	[Activity(NoHistory = true, Exported = true, LaunchMode = LaunchMode.SingleTop)]
+	[Activity(NoHistory = true, LaunchMode = LaunchMode.SingleTop, Exported = true)]
 	[IntentFilter(new[] { Intent.ActionView },
-		Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable },
-		DataScheme = "https",
-		DataHost = "maui-49b65.firebaseapp.com",
-	 DataPath = "/__/auth/handler")]
+				 Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable },
+				 DataScheme = "com.alarm.reminderapp")]
 	public class WebAuthenticatorCallbackActivity : Microsoft.Maui.Authentication.WebAuthenticatorCallbackActivity
 	{
+		// We don't need to add any code here, just the attributes above
 	}
 }

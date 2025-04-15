@@ -9,10 +9,12 @@ namespace Alarm.Pages
 	public partial class LoginPage : ContentPage
 	{
 		private readonly FirebaseAuthClient _authClient;
-
+		private readonly GoogleAuthService _authService;
+	
 		public LoginPage()
 		{
 			InitializeComponent();
+			_authService = new GoogleAuthService();
 			_authClient = new FirebaseAuthClient(new FirebaseAuthConfig
 			{
 				ApiKey = "AIzaSyDlkEYudHYVDZ9xF8tAAdH4Zocos1MPMec",
@@ -59,50 +61,27 @@ namespace Alarm.Pages
 				await DisplayAlert("Login Failed", ex.Message, "OK");
 			}
 		}
-		private async void GoogleLoginClicked(object sender, EventArgs e)
+		private async void OnGoogleLoginClicked(object sender, EventArgs e)
 		{
-#if ANDROID || IOS || MACCATALYST
 			try
 			{
-				var authResult = await WebAuthenticator.AuthenticateAsync(new WebAuthenticatorOptions
+				var user = await _authService.AuthenticateAsync();
+
+				if (user != null)
 				{
-					Url = new Uri("https://accounts.google.com/o/oauth2/auth?" +
-								  "client_id=910926851619-39oro3ad7r67sasmpc6cmu4krpajm6b2.apps.googleusercontent.com" +
-								  "&redirect_uri=https://maui-49b65.firebaseapp.com/__/auth/handler" +
-								  "&response_type=token" +
-								  "&scope=email%20profile"),
-					CallbackUrl = new Uri("https://maui-49b65.firebaseapp.com/__/auth/handler")
-				});
+					// User successfully authenticated
+					await DisplayAlert("Success", $"Logged in as {user.Name}", "OK");
 
-				if (authResult?.Properties.TryGetValue("access_token", out var token) == true)
-				{
-					var firebaseAuthUrl = $"https://identitytoolkit.googleapis.com/v1/accounts:signInWithIdp?key=AIzaSyDlkEYudHYVDZ9xF8tAAdH4Zocos1MPMec";
-
-					var content = new StringContent($"{{\"postBody\":\"id_token={token}&providerId=google.com\",\"requestUri\":\"https://maui-49b65.firebaseapp.com/__/auth/handler\",\"returnIdpCredential\":true,\"returnSecureToken\":true}}", System.Text.Encoding.UTF8, "application/json");
-
-					using var client = new HttpClient();
-					var response = await client.PostAsync(firebaseAuthUrl, content);
-					var jsonResponse = await response.Content.ReadAsStringAsync();
-
-					if (response.IsSuccessStatusCode)
-					{
-						await DisplayAlert("Success", "Google login successful!", "OK");
-						await Navigation.PushModalAsync(new HomePage());
-					}
-					else
-					{
-						await DisplayAlert("Login Failed", jsonResponse, "OK");
-					}
+					// Navigate to HomePage directly
+					await Navigation.PushAsync(new HomePage());
 				}
 			}
 			catch (Exception ex)
 			{
-				await DisplayAlert("Login Failed", ex.Message, "OK");
+				await DisplayAlert("Error", $"Login failed: {ex.Message}", "OK");
 			}
-#else
-			await DisplayAlert("Unsupported", "Google login is not supported on this platform.", "OK");
-#endif
 		}
+
 
 		private async void FacebookLoginClicked(object sender, EventArgs e)
 		{

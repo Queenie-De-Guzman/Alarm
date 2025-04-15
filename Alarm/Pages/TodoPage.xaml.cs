@@ -28,6 +28,7 @@ namespace Alarm.Pages
 
 			LoadTasks();
 		}
+
 		private async void LoadTasks()
 		{
 			var items = await _database.GetTodosAsync();
@@ -70,9 +71,8 @@ namespace Alarm.Pages
 			// Example of navigating to a different page when the button is clicked
 			await Navigation.PushModalAsync(new HomePage());
 		}
-		private async void MenuPage(object sender, EventArgs e)
+		private async void OnMenuPageClicked(object sender, EventArgs e)
 		{
-			// Example of navigating to a different page when the button is clicked
 			await Navigation.PushModalAsync(new MenuPage());
 		}
 

@@ -12,6 +12,7 @@ namespace Alarm
 			var builder = MauiApp.CreateBuilder();
 
 			builder.UseMauiApp<App>()
+
 				.UseLocalNotification()
 				.ConfigureFonts(fonts =>
 				{
@@ -27,6 +28,8 @@ namespace Alarm
 			builder.Services.AddSingleton(new AlarmDatabase(dbPath));
 			builder.Logging.AddDebug();
 #endif
+			builder.Services.AddTransient<GoogleAuthService>();
+		
 
 			return builder.Build();
 		}

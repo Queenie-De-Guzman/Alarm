@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:Alarm.Models"
-             x:Class="Alarm.Pages.MenuPage"
-             Title="MenuPage">
-    <ContentPage.BindingContext>
-        <local:TodoViewModel />
-    </ContentPage.BindingContext>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"  
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"  
+            xmlns:local="clr-namespace:Alarm.Models"  
+            x:Class="Alarm.Pages.MenuPage"  
+            Title="MenuPage">  
+   <ContentPage.BindingContext>  
+       <local:TodoViewModel />  
+   </ContentPage.BindingContext>  
 
-    <CollectionView ItemsSource="{Binding TodoItems}" SelectionMode="None">
-        <CollectionView.ItemTemplate>
-            <DataTemplate x:DataType="local:TodoItem">
-                <Grid Padding="10">
-                    <SwipeView>
-                        <SwipeView.RightItems>
-                            <SwipeItem Text="Done" BackgroundColor="Green" 
-                                       Command="{Binding Source={RelativeSource AncestorType={x:Type local:TodoViewModel}}, Path=MarkAsDoneCommand}"
-                                       CommandParameter="{Binding .}" />
-                        </SwipeView.RightItems>
+   <CollectionView ItemsSource="{Binding TodoItems}" SelectionMode="None">  
+       <CollectionView.ItemTemplate>  
+           <DataTemplate>  
+               <Grid Padding="10">  
+                   <SwipeView>  
+                       <SwipeView.RightItems>  
+                           <SwipeItem Text="Done" BackgroundColor="Green"   
+                                      Command="{Binding Source={RelativeSource AncestorType={x:Type local:TodoViewModel}}, Path=MarkAsDoneCommand}"  
+                                      CommandParameter="{Binding .}" />  
+                       </SwipeView.RightItems>  
 
-                        <Grid Padding="10">
-                            <Label Text="{Binding Title}" 
-                                   FontSize="18" 
-                                   TextColor="{Binding IsDone, Converter={StaticResource DoneTextColorConverter}}" />
-                        </Grid>
-                    </SwipeView>
-                </Grid>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
+                       <Grid Padding="10">  
+                           <Label Text="{Binding Title}"   
+                                  FontSize="18"   
+                                  TextColor="{Binding IsDone, Converter={StaticResource DoneTextColorConverter}}" />  
+                       </Grid>  
+                   </SwipeView>  
+               </Grid>  
+           </DataTemplate>  
+       </CollectionView.ItemTemplate>  
+   </CollectionView>  
 </ContentPage>

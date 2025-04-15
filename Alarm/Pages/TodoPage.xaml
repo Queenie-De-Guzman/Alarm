@@ -1,7 +1,6 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Alarm.Pages.TodoPage"
-             x:Name="TodoPage"
              BackgroundColor="{AppThemeBinding Light=#F5F5F5, Dark=#1E1E1E}"
              Title="Todo List">
 
@@ -109,7 +108,7 @@
                          BackgroundColor="Transparent"
                          CornerRadius="16"
                          Padding="4"
-                          Clicked="MenuPage"/>
+                          Clicked="OnMenuPageClicked"/>
         </Grid>
 
         <!-- Add Todo Section -->
