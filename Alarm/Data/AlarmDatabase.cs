@@ -1,5 +1,6 @@
 ﻿using Alarm.Models;
 using SQLite;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -14,7 +15,8 @@ namespace Alarm.Data
 			_database = new SQLiteAsyncConnection(dbPath);
 			_database.CreateTableAsync<AlarmModel>().Wait();
 			_database.CreateTableAsync<TodoItem>().Wait();
-			_database.CreateTableAsync<Note>().Wait();// 👈 Add this line
+			_database.CreateTableAsync<Note>().Wait();
+			_database.CreateTableAsync<CalendarEvent>().Wait(); // Add Calendar Events table
 		}
 
 		// ALARM METHODS
@@ -53,8 +55,39 @@ namespace Alarm.Data
 		public Task<int> DeleteAllNotesForUserAsync(string userId) =>
 			_database.ExecuteAsync("DELETE FROM Note WHERE UserId = ?", userId);
 
-		// Add this new method for updating notes
 		public Task<int> UpdateNoteAsync(Note note) =>
 			_database.UpdateAsync(note);
+
+		// CALENDAR EVENT METHODS
+		public Task<int> SaveEventAsync(CalendarEvent calEvent)
+		{
+			if (calEvent.Id != 0)
+				return _database.UpdateAsync(calEvent);
+			else
+			{
+				calEvent.Created = DateTime.Now;
+				return _database.InsertAsync(calEvent);
+			}
+		}
+
+		public Task<List<CalendarEvent>> GetEventsAsync() =>
+			_database.Table<CalendarEvent>().ToListAsync();
+
+		public Task<List<CalendarEvent>> GetEventsForDateAsync(DateTime date) =>
+			_database.Table<CalendarEvent>().Where(e => e.Date.Date == date.Date).ToListAsync();
+
+		public Task<List<CalendarEvent>> GetEventsForUserAsync(string userId) =>
+			_database.Table<CalendarEvent>().Where(e => e.UserId == userId).ToListAsync();
+
+		public Task<List<CalendarEvent>> GetEventsForMonthAsync(DateTime monthStart, DateTime monthEnd) =>
+			_database.Table<CalendarEvent>()
+					.Where(e => e.Date >= monthStart && e.Date <= monthEnd)
+					.ToListAsync();
+
+		public Task<int> DeleteEventAsync(CalendarEvent calEvent) =>
+			_database.DeleteAsync(calEvent);
+
+		public Task<int> DeleteEventsForUserAsync(string userId) =>
+			_database.ExecuteAsync("DELETE FROM CalendarEvent WHERE UserId = ?", userId);
 	}
 }

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Alarm.Pages.AddEventPage"
+             Title="Add Event"
+             BackgroundColor="White">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+            <Label Text="Add New Event" 
+                   FontSize="24" 
+                   FontAttributes="Bold" 
+                   HorizontalOptions="Center"
+                   TextColor="Black"
+                   FontFamily="OpenSansRegular"/>
+
+            <Label x:Name="DateLabel" 
+                   FontSize="18" 
+                   HorizontalOptions="Center"
+                   Margin="0,0,0,10"
+                   TextColor="Black"
+                   FontFamily="OpenSansRegular"/>
+
+            <Frame BorderColor="#E0E0E0" 
+                   BackgroundColor="White" 
+                   CornerRadius="10" 
+                   Padding="15" 
+                   HasShadow="True">
+
+                <VerticalStackLayout Spacing="15">
+                    <!-- Title -->
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Event Title" 
+                               FontAttributes="Bold" 
+                               TextColor="Black"
+                               FontFamily="OpenSansRegular"/>
+                        <Entry x:Name="TitleEntry" 
+                               TextColor="Black"
+                               BackgroundColor="#FFCC80"
+                               Placeholder="Enter event title" 
+                               PlaceholderColor="White"
+                               FontFamily="OpenSansRegular"/>
+                    </VerticalStackLayout>
+
+                    <!-- All Day Switch -->
+                    <Grid ColumnDefinitions="*, Auto">
+                        <Label Text="All Day Event" 
+                               VerticalOptions="Center" 
+                               TextColor="Black"
+                               FontFamily="OpenSansRegular"
+                               Grid.Column="0"/>
+                        <Switch x:Name="AllDaySwitch" 
+                                Grid.Column="1" 
+                                OnColor="#FF5722"
+                                Toggled="AllDaySwitch_Toggled"/>
+                    </Grid>
+
+                    <!-- Time -->
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Time" 
+                               FontAttributes="Bold" 
+                               TextColor="Black"
+                               FontFamily="OpenSansRegular"/>
+                        <Entry x:Name="TimeEntry" 
+                               Placeholder="e.g. 9:00 AM - 10:30 AM" 
+                               PlaceholderColor="Gray"
+                               TextColor="Black"
+                               BackgroundColor="White"
+                               FontFamily="OpenSansRegular"/>
+                    </VerticalStackLayout>
+
+                    <!-- Color Selection -->
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Event Color" 
+                               FontAttributes="Bold" 
+                               TextColor="Black"
+                               FontFamily="OpenSansRegular"/>
+                        <StackLayout x:Name="ColorPickerContainer" 
+                                     Orientation="Horizontal" 
+                                     HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+
+                    <!-- Notes -->
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Notes" 
+                               FontAttributes="Bold" 
+                               TextColor="Black"
+                               FontFamily="OpenSansRegular"/>
+                        <Editor x:Name="NotesEditor" 
+                                Placeholder="Add event details (optional)" 
+                                HeightRequest="100" 
+                                AutoSize="TextChanges"
+                                PlaceholderColor="Gray"
+                                TextColor="Black"
+                                BackgroundColor="White"
+                                FontFamily="OpenSansRegular"/>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Buttons -->
+            <Grid ColumnDefinitions="*, *" ColumnSpacing="15" Margin="0,10,0,0">
+                <Button Text="Cancel" 
+                        BackgroundColor="#E0E0E0" 
+                        TextColor="Black"
+                        FontFamily="OpenSansRegular"
+                        CornerRadius="5"
+                        Grid.Column="0"
+                        Clicked="CancelButton_Clicked"/>
+
+                <Button Text="Save Event" 
+                        BackgroundColor="#FF5722" 
+                        TextColor="White"
+                        FontFamily="OpenSansRegular"
+                        CornerRadius="5"
+                        Grid.Column="1"
+                        Clicked="SaveButton_Clicked"/>
+            </Grid>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

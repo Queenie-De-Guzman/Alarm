@@ -1,0 +1,217 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="Alarm.Pages.CalendarPage"
+             Title="Calendar"
+             BackgroundColor="White">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="CalendarHeaderStyle" TargetType="Label">
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="Margin" Value="0,10,0,5"/>
+                <Setter Property="TextColor" Value="#333333"/>
+            </Style>
+
+            <Style x:Key="SelectedDateStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="Margin" Value="0,10,0,20"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="TextColor" Value="#333333"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid Padding="20" RowSpacing="15" BackgroundColor="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Label Text="Calendar" 
+               FontSize="24" 
+               FontAttributes="Bold" 
+               HorizontalOptions="Center" 
+               TextColor="#333333"
+               Grid.Row="0"/>
+
+        <!-- Selected Date Display -->
+        <Label x:Name="SelectedDateLabel"
+               Text="No date selected"
+               Style="{StaticResource SelectedDateStyle}"
+               Grid.Row="1"/>
+
+        <!-- Calendar Control -->
+        <Frame Grid.Row="2" 
+               Padding="10" 
+               BorderColor="#E0E0E0" 
+               BackgroundColor="White"
+               CornerRadius="10"
+               HasShadow="True">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Calendar Header -->
+                <Grid Grid.Row="0" ColumnSpacing="0" Margin="0,0,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Text="&lt;"
+                            Grid.Column="0"
+                            HorizontalOptions="Start" 
+                            FontSize="18"
+                            WidthRequest="40"
+                            HeightRequest="40"
+                            CornerRadius="20"
+                            BackgroundColor="#F5F5F5"
+                            TextColor="#FF5722"
+                            x:Name="PrevMonthButton"
+                            Clicked="PrevMonthButton_Clicked"/>
+
+                    <Label x:Name="MonthYearLabel"
+                           Text="April 2025"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           TextColor="#333333"
+                           Grid.Column="1"/>
+
+                    <Button Text="&gt;"
+                            Grid.Column="2"
+                            HorizontalOptions="End" 
+                            FontSize="18"
+                            WidthRequest="40"
+                            HeightRequest="40"
+                            CornerRadius="20"
+                            BackgroundColor="#F5F5F5"
+                            TextColor="#FF5722"
+                            x:Name="NextMonthButton"
+                            Clicked="NextMonthButton_Clicked"/>
+                </Grid>
+
+                <!-- Day Headers -->
+                <Grid Grid.Row="1" RowSpacing="10" ColumnSpacing="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Day of Week Headers -->
+                    <Grid Grid.Row="0" ColumnSpacing="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Text="Su" Grid.Column="0" Style="{StaticResource CalendarHeaderStyle}" TextColor="#FF5252"/>
+                        <Label Text="Mo" Grid.Column="1" Style="{StaticResource CalendarHeaderStyle}"/>
+                        <Label Text="Tu" Grid.Column="2" Style="{StaticResource CalendarHeaderStyle}"/>
+                        <Label Text="We" Grid.Column="3" Style="{StaticResource CalendarHeaderStyle}"/>
+                        <Label Text="Th" Grid.Column="4" Style="{StaticResource CalendarHeaderStyle}"/>
+                        <Label Text="Fr" Grid.Column="5" Style="{StaticResource CalendarHeaderStyle}"/>
+                        <Label Text="Sa" Grid.Column="6" Style="{StaticResource CalendarHeaderStyle}" TextColor="#FF5252"/>
+                    </Grid>
+
+                    <!-- Calendar Days Grid -->
+                    <Grid x:Name="CalendarGrid" 
+                          Grid.Row="1" 
+                          RowSpacing="10" 
+                          ColumnSpacing="5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Calendar days will be generated in code-behind -->
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Frame>
+
+        <!-- Events List for Selected Date -->
+        <Frame Grid.Row="3"
+               IsVisible="{Binding HasEvents}"
+               BorderColor="#E0E0E0"
+               BackgroundColor="White"
+               CornerRadius="10"
+               Margin="0,5,0,10"
+               Padding="10"
+               HasShadow="True">
+            <VerticalStackLayout Spacing="10">
+                <Label Text="Events for Selected Date" 
+                       FontSize="16" 
+                       FontAttributes="Bold" 
+                       TextColor="#333333"/>
+                <CollectionView x:Name="EventsCollection" 
+                                HeightRequest="150"
+                                SelectionMode="Single"
+                                SelectionChanged="EventsCollection_SelectionChanged">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Padding="5" ColumnSpacing="10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="5"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <BoxView Grid.Column="0" 
+                                         Color="{Binding Color}" 
+                                         WidthRequest="5" 
+                                         VerticalOptions="Fill"/>
+
+                                <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                    <Label Text="{Binding Title}" 
+                                           FontAttributes="Bold" 
+                                           TextColor="#333333"/>
+                                    <Label Text="{Binding TimeDisplay}" 
+                                           FontSize="12" 
+                                           TextColor="#666666"/>
+                                </VerticalStackLayout>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </Frame>
+
+        <!-- Add Event Button -->
+        <Button Text="Add Event" 
+                BackgroundColor="#FF5722" 
+                TextColor="White"
+                CornerRadius="5"
+                Margin="0,5,0,0"
+                Grid.Row="4"
+                x:Name="AddEventButton"
+                Clicked="AddEventButton_Clicked"/>
+    </Grid>
+</ContentPage>

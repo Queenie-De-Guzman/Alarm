@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Alarm.Pages.EditEventPage"
+             Title="Edit Event"
+             BackgroundColor="White">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+            <Label Text="Edit Event" 
+                   FontSize="24" 
+                   FontAttributes="Bold" 
+                   HorizontalOptions="Center"
+                   TextColor="#333333"/>
+
+            <Label x:Name="DateLabel" 
+                   FontSize="18" 
+                   HorizontalOptions="Center"
+                   Margin="0,0,0,10"
+                   TextColor="#666666"/>
+
+            <Frame BorderColor="#E0E0E0" 
+                   BackgroundColor="White" 
+                   CornerRadius="10" 
+                   Padding="15" 
+                   HasShadow="True">
+
+                <VerticalStackLayout Spacing="15">
+                    <!-- Title -->
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Event Title" 
+                               FontAttributes="Bold" 
+                               TextColor="#333333"/>
+                        <Entry x:Name="TitleEntry" 
+                               Placeholder="Enter event title" 
+                               PlaceholderColor="#AAAAAA"/>
+                    </VerticalStackLayout>
+
+                    <!-- All Day Switch -->
+                    <Grid ColumnDefinitions="*, Auto">
+                        <Label Text="All Day Event" 
+                               VerticalOptions="Center" 
+                               TextColor="#333333"
+                               Grid.Column="0"/>
+                        <Switch x:Name="AllDaySwitch" 
+                                Grid.Column="1" 
+                                OnColor="#FF5722"
+                                Toggled="AllDaySwitch_Toggled"/>
+                    </Grid>
+
+                    <!-- Time -->
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Time" 
+                               FontAttributes="Bold" 
+                               TextColor="#333333"/>
+                        <Entry x:Name="TimeEntry" 
+                               Placeholder="e.g. 9:00 AM - 10:30 AM" 
+                               PlaceholderColor="#AAAAAA"/>
+                    </VerticalStackLayout>
+
+                    <!-- Color Selection -->
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Event Color" 
+                               FontAttributes="Bold" 
+                               TextColor="#333333"/>
+                        <StackLayout x:Name="ColorPickerContainer" 
+                                     Orientation="Horizontal" 
+                                     HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+
+                    <!-- Notes -->
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Notes" 
+                               FontAttributes="Bold" 
+                               TextColor="#333333"/>
+                        <Editor x:Name="NotesEditor" 
+                                Placeholder="Add event details (optional)" 
+                                HeightRequest="100" 
+                                AutoSize="TextChanges"
+                                PlaceholderColor="#AAAAAA"/>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Buttons -->
+            <Grid ColumnDefinitions="*, *, *" ColumnSpacing="10" Margin="0,10,0,0">
+                <Button Text="Delete" 
+                        BackgroundColor="#F44336" 
+                        TextColor="White"
+                        CornerRadius="5"
+                        Grid.Column="0"
+                        Clicked="DeleteButton_Clicked"/>
+
+                <Button Text="Cancel" 
+                        BackgroundColor="#E0E0E0" 
+                        TextColor="#333333"
+                        CornerRadius="5"
+                        Grid.Column="1"
+                        Clicked="CancelButton_Clicked"/>
+
+                <Button Text="Save" 
+                        BackgroundColor="#FF5722" 
+                        TextColor="White"
+                        CornerRadius="5"
+                        Grid.Column="2"
+                        Clicked="SaveButton_Clicked"/>
+            </Grid>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

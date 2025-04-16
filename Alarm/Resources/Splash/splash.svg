@@ -67,8 +67,34 @@
 		<animateTransform attributeName="transform" type="translate" values="0,0; -15,0; 0,0" dur="10s" repeatCount="indefinite" />
 	</path>
 
+	<!-- Loading animation - rotating dots -->
+	<g id="loadingDots">
+		<!-- Loading dots -->
+		<circle cx="44" cy="115" r="3" fill="#FFFFFF">
+			<animate attributeName="opacity" values="0.2;1;0.2" dur="1.5s" begin="0s" repeatCount="indefinite" />
+		</circle>
+		<circle cx="54" cy="115" r="3" fill="#FFFFFF">
+			<animate attributeName="opacity" values="0.2;1;0.2" dur="1.5s" begin="0.25s" repeatCount="indefinite" />
+		</circle>
+		<circle cx="64" cy="115" r="3" fill="#FFFFFF">
+			<animate attributeName="opacity" values="0.2;1;0.2" dur="1.5s" begin="0.5s" repeatCount="indefinite" />
+		</circle>
+		<circle cx="74" cy="115" r="3" fill="#FFFFFF">
+			<animate attributeName="opacity" values="0.2;1;0.2" dur="1.5s" begin="0.75s" repeatCount="indefinite" />
+		</circle>
+		<circle cx="84" cy="115" r="3" fill="#FFFFFF">
+			<animate attributeName="opacity" values="0.2;1;0.2" dur="1.5s" begin="1s" repeatCount="indefinite" />
+		</circle>
+	</g>
+
+	<!-- Pulse effect around clock -->
+	<circle cx="64" cy="50" r="32" fill="none" stroke="#FFFFFF" stroke-width="0.5" opacity="0">
+		<animate attributeName="r" values="32;40" dur="2s" repeatCount="indefinite" />
+		<animate attributeName="opacity" values="0.6;0" dur="2s" repeatCount="indefinite" />
+	</circle>
+
 	<!-- App name with better typography -->
-	<text x="64" y="115" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#FFFFFF" stroke="#000000" stroke-width="0.3" stroke-opacity="0.5">
+	<text x="64" y="105" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#FFFFFF" stroke="#000000" stroke-width="0.3" stroke-opacity="0.5">
 		ALARM MAUI
 	</text>
 </svg>

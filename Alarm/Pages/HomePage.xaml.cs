@@ -41,7 +41,7 @@ namespace Alarm.Pages
 			// Navigate to Alarm setup page or open alarm dialog
 			await Navigation.PushModalAsync(new AlarmPage());
 		}
-		private async void OnTodoList(object sender, EventArgs e)
+		private async void OnTodoListClicked(object sender, EventArgs e)
 		{
 			// Example of navigating to a different page when the button is clicked
 			await Navigation.PushModalAsync(new TodoPage());
@@ -51,6 +51,17 @@ namespace Alarm.Pages
 			await Navigation.PushModalAsync(new NotesPage());
 		}
 
+
+
+
+
+		private async void OnCalendarClicked(object sender, EventArgs e)
+		{
+			string dbPath = Path.Combine(FileSystem.AppDataDirectory, "alarm.db");
+			var database = new AlarmDatabase(dbPath);
+			await Navigation.PushModalAsync(new CalendarPage(database));
+		}
+		
 	}
 }
 

@@ -1,46 +1,127 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-  <!-- Background circle with gradient -->
-  <defs>
-    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#FF7F50;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#1E90FF;stop-opacity:1" />
-    </linearGradient>
-    <linearGradient id="sunGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#FFD700;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#FFA500;stop-opacity:1" />
-    </linearGradient>
-    <linearGradient id="mountainGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#228B22;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#006400;stop-opacity:1" />
-    </linearGradient>
-    <linearGradient id="oceanGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#4169E1;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#000080;stop-opacity:1" />
-    </linearGradient>
-  </defs>
-  
-  <!-- Main circular background -->
-  <circle cx="256" cy="256" r="246" fill="url(#bgGradient)" stroke="#FFFFFF" stroke-width="10" />
-  
-  <!-- Clock/Sun in the upper portion -->
-  <circle cx="256" cy="180" r="100" fill="url(#sunGradient)" stroke="#FFFFFF" stroke-width="6" />
-  <circle cx="256" cy="180" r="80" fill="none" stroke="#FFFFFF" stroke-width="3" />
-  
-  <!-- Clock hands -->
-  <line x1="256" y1="180" x2="256" y2="120" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" />
-  <line x1="256" y1="180" x2="300" y2="210" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" />
-  
-  <!-- Mountain silhouette (simplified) -->
-  <path d="M100,320 L170,250 L220,290 L256,230 L300,270 L350,220 L410,300 L100,300 Z" fill="url(#mountainGradient)" />
-  
-  <!-- Ocean wave silhouette -->
-  <path d="M100,300 L410,300 C380,330 340,350 300,350 C260,350 220,330 190,330 C160,330 130,340 100,300 Z" fill="url(#oceanGradient)" />
-  
-  <!-- Palm tree silhouette (simplified) -->
-  <path d="M350,300 L350,320" stroke="#000000" stroke-width="6" stroke-linecap="round" />
-  <path d="M350,300 C330,280 340,270 350,280 C360,270 370,280 350,300 Z" fill="#000000" />
-  
-  <!-- Text "AM" beneath the logo, small and subtle -->
-  <text x="256" y="390" font-family="Arial, sans-serif" font-size="60" font-weight="bold" text-anchor="middle" fill="#FFFFFF">AM</text>
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+	<!-- Definitions for filters and gradients -->
+	<defs>
+		<!-- Main gradient for clock face -->
+		<linearGradient id="clockGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+			<stop offset="0%" stop-color="#4158D0"/>
+			<stop offset="50%" stop-color="#C850C0"/>
+			<stop offset="100%" stop-color="#FFCC70"/>
+		</linearGradient>
+
+		<!-- Gradient for bells -->
+		<linearGradient id="bellGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+			<stop offset="0%" stop-color="#FF3366"/>
+			<stop offset="100%" stop-color="#FF9966"/>
+		</linearGradient>
+
+		<!-- Glow effect -->
+		<filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+			<feGaussianBlur stdDeviation="5" result="blur"/>
+			<feComposite in="SourceGraphic" in2="blur" operator="over"/>
+		</filter>
+
+		<!-- Inner shadow for clock -->
+		<filter id="innerShadow" x="-50%" y="-50%" width="200%" height="200%">
+			<feGaussianBlur in="SourceAlpha" stdDeviation="3" result="blur"/>
+			<feOffset dx="0" dy="0" result="offsetBlur"/>
+			<feComposite in="SourceGraphic" in2="offsetBlur" operator="over"/>
+		</filter>
+
+		<!-- Noise texture pattern -->
+		<pattern id="noise" width="100" height="100" patternUnits="userSpaceOnUse">
+			<rect width="100" height="100" fill="#ffffff" opacity="0.05">
+				<animate attributeName="opacity" values="0.05;0.1;0.05" dur="3s" repeatCount="indefinite"/>
+			</rect>
+		</pattern>
+
+		<!-- Ring effect for alarm animation -->
+		<filter id="ringEffect">
+			<feTurbulence type="fractalNoise" baseFrequency="0.01" numOctaves="1" seed="1">
+				<animate attributeName="seed" from="1" to="10" dur="1s" repeatCount="indefinite"/>
+			</feTurbulence>
+			<feDisplacementMap in="SourceGraphic" scale="1"/>
+		</filter>
+	</defs>
+
+	<!-- Background glow -->
+	<circle cx="100" cy="105" r="85" fill="url(#clockGradient)" opacity="0.2" filter="url(#glow)"/>
+
+	<!-- Main clock body with shadow -->
+	<circle cx="100" cy="105" r="70" fill="url(#clockGradient)" filter="drop-shadow(0 4px 10px rgba(0,0,0,0.3))"/>
+
+	<!-- Texture overlay -->
+	<circle cx="100" cy="105" r="70" fill="url(#noise)" opacity="0.1"/>
+
+	<!-- Clock face inner ring -->
+	<circle cx="100" cy="105" r="60" fill="none" stroke="white" stroke-width="2" opacity="0.7" filter="url(#innerShadow)"/>
+
+	<!-- Clock ticks - minimalist style -->
+	<g opacity="0.9">
+		<circle cx="100" cy="45" r="3" fill="white"/>
+		<circle cx="160" cy="105" r="3" fill="white"/>
+		<circle cx="100" cy="165" r="3" fill="white"/>
+		<circle cx="40" cy="105" r="3" fill="white"/>
+		<!-- Additional subtle ticks -->
+		<circle cx="143" cy="62" r="2" fill="white" opacity="0.7"/>
+		<circle cx="143" cy="148" r="2" fill="white" opacity="0.7"/>
+		<circle cx="57" cy="148" r="2" fill="white" opacity="0.7"/>
+		<circle cx="57" cy="62" r="2" fill="white" opacity="0.7"/>
+	</g>
+
+	<!-- Clock hands with glow -->
+	<g filter="url(#glow)">
+		<line x1="100" y1="105" x2="100" y2="60" stroke="white" stroke-width="3" stroke-linecap="round">
+			<animateTransform attributeName="transform" type="rotate" from="0 100 105" to="360 100 105" dur="60s" repeatCount="indefinite"/>
+		</line>
+		<line x1="100" y1="105" x2="135" y2="120" stroke="white" stroke-width="2" stroke-linecap="round">
+			<animateTransform attributeName="transform" type="rotate" from="0 100 105" to="360 100 105" dur="3600s" repeatCount="indefinite"/>
+		</line>
+	</g>
+
+	<!-- Pulsing center point -->
+	<circle cx="100" cy="105" r="5" fill="white">
+		<animate attributeName="r" values="5;6;5" dur="2s" repeatCount="indefinite"/>
+		<animate attributeName="opacity" values="1;0.8;1" dur="2s" repeatCount="indefinite"/>
+	</circle>
+
+	<!-- Stylized bells with ring effect -->
+	<g filter="url(#ringEffect)">
+		<!-- Left bell -->
+		<path d="M70,40 Q70,25 85,25 L85,40 Z" fill="url(#bellGradient)" filter="drop-shadow(0 2px 3px rgba(0,0,0,0.3))">
+			<animate attributeName="d" values="M70,40 Q70,25 85,25 L85,40 Z;M68,38 Q69,23 85,25 L85,40 Z;M70,40 Q70,25 85,25 L85,40 Z" dur="0.3s" repeatCount="indefinite"/>
+		</path>
+
+		<!-- Right bell -->
+		<path d="M130,40 Q130,25 115,25 L115,40 Z" fill="url(#bellGradient)" filter="drop-shadow(0 2px 3px rgba(0,0,0,0.3))">
+			<animate attributeName="d" values="M130,40 Q130,25 115,25 L115,40 Z;M132,38 Q131,23 115,25 L115,40 Z;M130,40 Q130,25 115,25 L115,40 Z" dur="0.3s" repeatCount="indefinite"/>
+		</path>
+
+		<!-- Bell connecting piece -->
+		<rect x="85" y="25" width="30" height="15" rx="7.5" fill="url(#bellGradient)" filter="drop-shadow(0 2px 3px rgba(0,0,0,0.3))"/>
+	</g>
+
+	<!-- Bell hammer -->
+	<g>
+		<circle cx="100" cy="15" r="4" fill="white" opacity="0.9"/>
+		<line x1="100" y1="19" x2="100" y2="28" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.9"/>
+	</g>
+
+	<!-- Sound waves effect -->
+	<g opacity="0.5">
+		<path d="M60,40 Q50,45 45,55" stroke="white" stroke-width="1.5" stroke-linecap="round" fill="none">
+			<animate attributeName="opacity" values="0;0.5;0" dur="2s" repeatCount="indefinite"/>
+		</path>
+		<path d="M55,35 Q40,45 30,60" stroke="white" stroke-width="1.5" stroke-linecap="round" fill="none">
+			<animate attributeName="opacity" values="0;0.5;0" dur="2s" repeatCount="indefinite" begin="0.3s"/>
+		</path>
+		<path d="M140,40 Q150,45 155,55" stroke="white" stroke-width="1.5" stroke-linecap="round" fill="none">
+			<animate attributeName="opacity" values="0;0.5;0" dur="2s" repeatCount="indefinite"/>
+		</path>
+		<path d="M145,35 Q160,45 170,60" stroke="white" stroke-width="1.5" stroke-linecap="round" fill="none">
+			<animate attributeName="opacity" values="0;0.5;0" dur="2s" repeatCount="indefinite" begin="0.3s"/>
+		</path>
+	</g>
+
+	<!-- Clock feet with shadow -->
+	<rect x="75" y="170" width="50" height="7" rx="3.5" fill="white" opacity="0.9" filter="drop-shadow(0 2px 2px rgba(0,0,0,0.2))"/>
 </svg>
