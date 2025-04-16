@@ -1,3 +1,4 @@
+using Alarm.Services;
 using Firebase.Auth;
 using Firebase.Auth.Providers;
 using Microsoft.Maui.Authentication;
@@ -10,11 +11,13 @@ namespace Alarm.Pages
 	{
 		private readonly FirebaseAuthClient _authClient;
 		private readonly GoogleAuthService _authService;
-	
+		private readonly FacebookAuthService _facebookAuthService;
+
 		public LoginPage()
 		{
 			InitializeComponent();
 			_authService = new GoogleAuthService();
+			_facebookAuthService = new FacebookAuthService();
 			_authClient = new FirebaseAuthClient(new FirebaseAuthConfig
 			{
 				ApiKey = "AIzaSyDlkEYudHYVDZ9xF8tAAdH4Zocos1MPMec",
@@ -46,9 +49,9 @@ namespace Alarm.Pages
 
 				if (authResult?.User != null)
 				{
-					await DisplayAlert("Success", $"Welcome, {authResult.User.Info.Email}!", "OK");
+					Preferences.Set("UserEmail", authResult.User.Info.Email); //ave email
 
-					// Navigate to Home Page
+					await DisplayAlert("Success", $"Welcome, {authResult.User.Info.Email}!", "OK");
 					await Navigation.PushModalAsync(new HomePage());
 				}
 				else
@@ -69,11 +72,9 @@ namespace Alarm.Pages
 
 				if (user != null)
 				{
-					// User successfully authenticated
+					Preferences.Set("UserEmail", user.Email); // Save Google email
 					await DisplayAlert("Success", $"Logged in as {user.Name}", "OK");
-
-					// Navigate to HomePage directly
-					await Navigation.PushAsync(new HomePage());
+					await Navigation.PushModalAsync(new HomePage());
 				}
 			}
 			catch (Exception ex)
@@ -82,51 +83,30 @@ namespace Alarm.Pages
 			}
 		}
 
-
-		private async void FacebookLoginClicked(object sender, EventArgs e)
+		private async void OnFacebookLoginClicked(object sender, EventArgs e)
 		{
-#if ANDROID || IOS || MACCATALYST
 			try
 			{
-				var authResult = await WebAuthenticator.AuthenticateAsync(new WebAuthenticatorOptions
-				{
-					Url = new Uri("https://www.facebook.com/v12.0/dialog/oauth?" +
-								  "client_id=641791538781902" +
-								  "&redirect_uri=https://maui-49b65.firebaseapp.com/__/auth/handler" +
-								  "&response_type=token" +
-								  "&scope=email"),
-					CallbackUrl = new Uri("https://maui-49b65.firebaseapp.com/__/auth/handler")
-				});
+				var facebookUser = await _facebookAuthService.AuthenticateAsync();
+				Preferences.Set("UserEmail", facebookUser.Email);
+				Preferences.Set("UserPhotoUrl", facebookUser.Picture.Data.Url); ; // Save Facebook email
+				await DisplayAlert("Success", $"Welcome {facebookUser.Name}!", "OK");
+				await Navigation.PushModalAsync(new HomePage());
 
-				if (authResult?.Properties.TryGetValue("access_token", out var token) == true)
-				{
-					var firebaseAuthUrl = $"https://identitytoolkit.googleapis.com/v1/accounts:signInWithIdp?key=AIzaSyDlkEYudHYVDZ9xF8tAAdH4Zocos1MPMec";
-
-					var content = new StringContent($"{{\"postBody\":\"access_token={token}&providerId=facebook.com\",\"requestUri\":\"https://maui-49b65.firebaseapp.com/__/auth/handler\",\"returnIdpCredential\":true,\"returnSecureToken\":true}}", System.Text.Encoding.UTF8, "application/json");
-
-					using var client = new HttpClient();
-					var response = await client.PostAsync(firebaseAuthUrl, content);
-					var jsonResponse = await response.Content.ReadAsStringAsync();
-
-					if (response.IsSuccessStatusCode)
-					{
-						await DisplayAlert("Success", "Facebook login successful!", "OK");
-						await Navigation.PushModalAsync(new HomePage());
-					}
-					else
-					{
-						await DisplayAlert("Login Failed", jsonResponse, "OK");
-					}
-				}
 			}
 			catch (Exception ex)
 			{
-				await DisplayAlert("Login Failed", ex.Message, "OK");
+				await DisplayAlert("Error", $"Login failed: {ex.Message}", "OK");
 			}
-#else
-			await DisplayAlert("Unsupported", "Facebook login is not supported on this platform.", "OK");
-#endif
 		}
+
+
+
+
+
+
+
+
 
 
 		private async void OnSignUpTapped(object sender, EventArgs e)

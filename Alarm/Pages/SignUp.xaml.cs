@@ -68,7 +68,8 @@ namespace Alarm.Pages
 
 		private async void OnLoginTapped(object sender, EventArgs e)
 		{
-			await Navigation.PushModalAsync(new LoginPage());
+			var loginPage = Handler.MauiContext.Services.GetService<LoginPage>();
+			await Navigation.PushModalAsync(loginPage);
 		}
 	}
 }

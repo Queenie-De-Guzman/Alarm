@@ -1,6 +1,8 @@
 using Firebase.Auth;
 using Microsoft.Maui.Storage;
 using System;
+using Alarm.Data;
+using Alarm.Models;
 
 namespace Alarm.Pages
 {
@@ -10,16 +12,21 @@ namespace Alarm.Pages
 		{
 			InitializeComponent();
 			LoadUserData();
+
 		}
 
 		private void LoadUserData()
 		{
-			// Kunin ang email mula sa local storage (Preferences)
 			string userEmail = Preferences.Get("UserEmail", "user@example.com");
+			string photoUrl = Preferences.Get("UserPhotoUrl", "");
+			string profileUrl = Preferences.Get("UserPhotoUrl", "https://via.placeholder.com/70");
 
 			WelcomeLabel.Text = "Welcome!";
 			UserEmailLabel.Text = userEmail;
+
+			ProfileImage.Source = ImageSource.FromUri(new Uri(profileUrl));
 		}
+
 
 		private async void OnLogoutClicked(object sender, EventArgs e)
 		{
@@ -39,6 +46,11 @@ namespace Alarm.Pages
 			// Example of navigating to a different page when the button is clicked
 			await Navigation.PushModalAsync(new TodoPage());
 		}
+		private async void OnNotesClicked(object sender, EventArgs e)
+		{
+			await Navigation.PushModalAsync(new NotesPage());
+		}
+
 	}
 }
 

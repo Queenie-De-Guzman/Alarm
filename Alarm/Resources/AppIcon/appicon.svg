@@ -1,4 +1,46 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="456" height="456" viewBox="0 0 456 456" version="1.1" xmlns="http://www.w3.org/2000/svg">
-    <rect x="0" y="0" width="456" height="456" fill="#512BD4" />
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle with gradient -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF7F50;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1E90FF;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="sunGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFD700;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FFA500;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="mountainGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#228B22;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#006400;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="oceanGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#4169E1;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#000080;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Main circular background -->
+  <circle cx="256" cy="256" r="246" fill="url(#bgGradient)" stroke="#FFFFFF" stroke-width="10" />
+  
+  <!-- Clock/Sun in the upper portion -->
+  <circle cx="256" cy="180" r="100" fill="url(#sunGradient)" stroke="#FFFFFF" stroke-width="6" />
+  <circle cx="256" cy="180" r="80" fill="none" stroke="#FFFFFF" stroke-width="3" />
+  
+  <!-- Clock hands -->
+  <line x1="256" y1="180" x2="256" y2="120" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" />
+  <line x1="256" y1="180" x2="300" y2="210" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" />
+  
+  <!-- Mountain silhouette (simplified) -->
+  <path d="M100,320 L170,250 L220,290 L256,230 L300,270 L350,220 L410,300 L100,300 Z" fill="url(#mountainGradient)" />
+  
+  <!-- Ocean wave silhouette -->
+  <path d="M100,300 L410,300 C380,330 340,350 300,350 C260,350 220,330 190,330 C160,330 130,340 100,300 Z" fill="url(#oceanGradient)" />
+  
+  <!-- Palm tree silhouette (simplified) -->
+  <path d="M350,300 L350,320" stroke="#000000" stroke-width="6" stroke-linecap="round" />
+  <path d="M350,300 C330,280 340,270 350,280 C360,270 370,280 350,300 Z" fill="#000000" />
+  
+  <!-- Text "AM" beneath the logo, small and subtle -->
+  <text x="256" y="390" font-family="Arial, sans-serif" font-size="60" font-weight="bold" text-anchor="middle" fill="#FFFFFF">AM</text>
 </svg>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Alarm.Pages.NoteModalPage"
+    Title="Note Detail"
+    BackgroundColor="#1E1E1E">
+
+    <Grid RowDefinitions="Auto,*,Auto" Padding="20" RowSpacing="20">
+        <!-- Header -->
+        <Label Text="Note Detail" 
+               FontSize="28" 
+               FontAttributes="Bold" 
+               HorizontalOptions="Center"
+               TextColor="White"/>
+
+        <!-- Note Content -->
+        <Frame Grid.Row="1"
+               BorderColor="#3E3E3E"
+               BackgroundColor="#2A2A2A"
+               CornerRadius="12"
+               Padding="15"
+               HasShadow="True">
+            <ScrollView>
+                <Label x:Name="NoteContentLabel" 
+                       FontSize="16" 
+                       TextColor="White"
+                       LineBreakMode="WordWrap"/>
+            </ScrollView>
+        </Frame>
+
+        <!-- Close Button -->
+        <Button Grid.Row="2"
+                Text="Close" 
+                Clicked="OnCloseClicked"
+                BackgroundColor="#8BC34A"
+                TextColor="White"
+                CornerRadius="10"
+                HeightRequest="50"
+                FontSize="18"
+                HorizontalOptions="Center"
+                WidthRequest="150"/>
+    </Grid>
+</ContentPage>

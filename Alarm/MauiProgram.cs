@@ -1,4 +1,5 @@
 ﻿using Alarm.Data;
+using Alarm.Services;
 using Microsoft.Extensions.Logging;
 using Plugin.LocalNotification;
 using Plugin.Maui.Audio;
@@ -29,8 +30,9 @@ namespace Alarm
 			builder.Logging.AddDebug();
 #endif
 			builder.Services.AddTransient<GoogleAuthService>();
-		
 
+			
+			builder.Services.AddSingleton<FacebookAuthService>();
 			return builder.Build();
 		}
 	}

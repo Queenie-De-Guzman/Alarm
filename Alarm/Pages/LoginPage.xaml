@@ -62,7 +62,7 @@
                 <Frame CornerRadius="15" HasShadow="False" BackgroundColor="White" Padding="5"
                        WidthRequest="80" HeightRequest="55">
                     <Frame.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="FacebookLoginClicked"/>
+                        <TapGestureRecognizer Tapped="OnFacebookLoginClicked"/>
                     </Frame.GestureRecognizers>
                     <Image Source="images/faceicon.png" HeightRequest="30" Aspect="AspectFit"
                            HorizontalOptions="Center" VerticalOptions="Center"/>

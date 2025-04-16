@@ -10,7 +10,7 @@ using Alarm.Data;
 using Alarm.Models;
 using System.Xml.Linq;
 using Plugin.LocalNotification.AndroidOption;
-
+using Microsoft.Maui.Storage;
 
 namespace Alarm.Pages
 {
@@ -19,25 +19,33 @@ namespace Alarm.Pages
 		public ObservableCollection<AlarmModel> Alarms { get; set; } = new ObservableCollection<AlarmModel>();
 		private AlarmModel? selectedAlarm;
 		private IAudioPlayer? player;
-		private System.Timers.Timer checkTimer; // Explicitly use System.Timers.Timer
+		private System.Timers.Timer checkTimer;
 		private readonly AlarmDatabase _databaseHelper;
 
 		public AlarmPage()
 		{
 			InitializeComponent();
 
-			// Initialize SQLite database helper
 			string dbPath = Path.Combine(FileSystem.AppDataDirectory, "alarms.db");
 			_databaseHelper = new AlarmDatabase(dbPath);
 
-			// Load alarms from the database asynchronously
 			LoadAlarmsAsync();
 
-			// Set up timer to check alarms every second
-			checkTimer = new System.Timers.Timer(1000); // 1-second check interval
+			checkTimer = new System.Timers.Timer(1000);
 			checkTimer.Elapsed += CheckAlarms;
 			checkTimer.Start();
 		}
+
+		private async Task LoadAlarmsAsync()
+		{
+			var allAlarms = await _databaseHelper.GetAlarmsAsync();
+			var currentUserEmail = Preferences.Get("UserEmail", "user@example.com");
+
+			var userAlarms = allAlarms.Where(a => a.UserEmail == currentUserEmail);
+			Alarms = new ObservableCollection<AlarmModel>(userAlarms);
+			alarmsCollectionView.ItemsSource = Alarms;
+		}
+
 		private void OnAlarmSelected(object sender, SelectionChangedEventArgs e)
 		{
 			selectedAlarm = e.CurrentSelection.FirstOrDefault() as AlarmModel;
@@ -51,13 +59,6 @@ namespace Alarm.Pages
 			}
 		}
 
-		private async Task LoadAlarmsAsync()
-		{
-			var alarms = await _databaseHelper.GetAlarmsAsync();
-			Alarms = new ObservableCollection<AlarmModel>(alarms);
-			alarmsCollectionView.ItemsSource = Alarms;
-		}
-
 		private async void OnAddAlarmClicked(object sender, EventArgs e)
 		{
 			if (string.IsNullOrWhiteSpace(titleEntry.Text))
@@ -66,14 +67,16 @@ namespace Alarm.Pages
 				return;
 			}
 
+			var userEmail = Preferences.Get("UserEmail", "user@example.com");
+
 			var newAlarm = new AlarmModel
 			{
 				Title = titleEntry.Text.Trim(),
 				AlarmDateTime = alarmDatePicker.Date + alarmTimePicker.Time,
-				Triggered = false
+				Triggered = false,
+				UserEmail = userEmail
 			};
 
-			// Save alarm to the database
 			await _databaseHelper.SaveAlarmAsync(newAlarm);
 			Alarms.Add(newAlarm);
 
@@ -94,7 +97,6 @@ namespace Alarm.Pages
 			selectedAlarm.AlarmDateTime = alarmDatePicker.Date + alarmTimePicker.Time;
 			selectedAlarm.Triggered = false;
 
-			// Save updated alarm to the database
 			await _databaseHelper.SaveAlarmAsync(selectedAlarm);
 			RefreshCollectionView();
 
@@ -105,10 +107,7 @@ namespace Alarm.Pages
 		{
 			if (sender is SwipeItem swipeItem && swipeItem.CommandParameter is AlarmModel alarmToDelete)
 			{
-				// Delete the alarm from the database
 				await _databaseHelper.DeleteAlarmAsync(alarmToDelete);
-
-				// Remove from the collection and refresh UI
 				Alarms.Remove(alarmToDelete);
 				RefreshCollectionView();
 
@@ -120,15 +119,12 @@ namespace Alarm.Pages
 		{
 			if (selectedAlarm != null)
 			{
-				// Delete alarm from the database
 				await _databaseHelper.DeleteAlarmAsync(selectedAlarm);
-
 				Alarms.Remove(selectedAlarm);
 				selectedAlarm = null;
 
 				statusLabel.Text = "Alarm deleted.";
 
-				// Reset UI fields
 				titleEntry.Text = "";
 				alarmDatePicker.Date = DateTime.Now;
 				alarmTimePicker.Time = DateTime.Now.TimeOfDay;
@@ -172,6 +168,7 @@ namespace Alarm.Pages
 				player.Stop();
 			}
 		}
+
 		private void TriggerNotification(AlarmModel alarm)
 		{
 			var request = new NotificationRequest
@@ -186,15 +183,12 @@ namespace Alarm.Pages
 				},
 				Android = new AndroidOptions
 				{
-					ChannelId = "alarm_channel" // Sound/vibration handled via the channel
+					ChannelId = "alarm_channel"
 				}
 			};
 
 			LocalNotificationCenter.Current.Show(request);
 		}
-		
-
-
 
 		private void RefreshCollectionView()
 		{
@@ -206,7 +200,6 @@ namespace Alarm.Pages
 
 		private async void OnBackButtonHome(object sender, EventArgs e)
 		{
-			// Example of navigating to a different page when the button is clicked
 			await Navigation.PushModalAsync(new HomePage());
 		}
 	}

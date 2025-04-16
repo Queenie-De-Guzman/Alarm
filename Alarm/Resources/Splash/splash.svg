@@ -1,8 +1,74 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg width="456" height="456" viewBox="0 0 456 456" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
-    <path d="m 105.50037,281.60863 c -2.70293,0 -5.00091,-0.90042 -6.893127,-2.70209 -1.892214,-1.84778 -2.837901,-4.04181 -2.837901,-6.58209 0,-2.58722 0.945687,-4.80389 2.837901,-6.65167 1.892217,-1.84778 4.190197,-2.77167 6.893127,-2.77167 2.74819,0 5.06798,0.92389 6.96019,2.77167 1.93749,1.84778 2.90581,4.06445 2.90581,6.65167 0,2.54028 -0.96832,4.73431 -2.90581,6.58209 -1.89221,1.80167 -4.212,2.70209 -6.96019,2.70209 z" style="fill:#ffffff;fill-rule:nonzero;stroke-width:0.838376" />
-    <path d="M 213.56111,280.08446 H 195.99044 L 149.69953,207.0544 c -1.17121,-1.84778 -2.14037,-3.76515 -2.90581,-5.75126 h -0.40578 c 0.36051,2.12528 0.54076,6.67515 0.54076,13.6496 v 65.13172 h -15.54349 v -99.36009 h 18.71925 l 44.7374,71.29798 c 1.89222,2.95695 3.1087,4.98917 3.64945,6.09751 h 0.26996 c -0.45021,-2.6325 -0.67573,-7.09015 -0.67573,-13.37293 v -64.02256 h 15.47557 z" style="fill:#ffffff;fill-rule:nonzero;stroke-width:0.838376" />
-    <path d="m 289.25134,280.08446 h -54.40052 v -99.36009 h 52.23835 v 13.99669 h -36.15411 v 28.13085 h 33.31621 v 13.9271 h -33.31621 v 29.37835 h 38.31628 z" style="fill:#ffffff;fill-rule:nonzero;stroke-width:0.838376" />
-    <path d="M 366.56466,194.72106 H 338.7222 v 85.3634 h -16.08423 v -85.3634 h -27.77455 v -13.99669 h 71.70124 z" style="fill:#ffffff;fill-rule:nonzero;stroke-width:0.838376" />
+<svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+	<!-- Improved background gradient -->
+	<defs>
+		<linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+			<stop offset="0%" style="stop-color:#7B68EE;stop-opacity:1">
+				<animate attributeName="stop-color" values="#7B68EE;#9370DB;#7B68EE" dur="10s" repeatCount="indefinite" />
+			</stop>
+			<stop offset="100%" style="stop-color:#512BD4;stop-opacity:1">
+				<animate attributeName="stop-color" values="#512BD4;#6C3CE3;#512BD4" dur="10s" repeatCount="indefinite" />
+			</stop>
+		</linearGradient>
+		<linearGradient id="oceanGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+			<stop offset="0%" style="stop-color:#4B0082;stop-opacity:1" />
+			<stop offset="100%" style="stop-color:#27104A;stop-opacity:1" />
+		</linearGradient>
+		<radialGradient id="sunGlow" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+			<stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:0.8" />
+			<stop offset="100%" style="stop-color:#FFFFFF;stop-opacity:0">
+				<animate attributeName="stop-opacity" values="0;0.1;0;0.1;0" dur="4s" repeatCount="indefinite" />
+			</stop>
+		</radialGradient>
+	</defs>
+
+	<!-- Background -->
+	<rect x="0" y="0" width="128" height="128" fill="url(#skyGradient)" />
+
+	<!-- Ocean -->
+	<path d="M0,85 Q32,82 64,85 Q96,88 128,85 L128,128 L0,128 Z" fill="url(#oceanGradient)">
+		<animate attributeName="d" values="M0,85 Q32,82 64,85 Q96,88 128,85 L128,128 L0,128 Z; M0,86 Q32,84 64,86 Q96,88 128,86 L128,128 L0,128 Z; M0,85 Q32,82 64,85 Q96,88 128,85 L128,128 L0,128 Z" dur="12s" repeatCount="indefinite" />
+	</path>
+
+	<!-- Sun/Alarm Clock with subtle glow -->
+	<circle cx="64" cy="50" r="30" fill="url(#sunGlow)" />
+	<circle cx="64" cy="50" r="26" fill="#FFD700" stroke="#FFFFFF" stroke-width="2">
+		<animate attributeName="fill" values="#FFD700;#FFC125;#FFD700" dur="7s" repeatCount="indefinite" />
+	</circle>
+	<circle cx="64" cy="50" r="20" fill="none" stroke="#FFFFFF" stroke-width="1" />
+
+	<!-- Clock hands -->
+	<line x1="64" y1="50" x2="64" y2="30" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round">
+		<animateTransform attributeName="transform" type="rotate" from="0 64 50" to="360 64 50" dur="60s" repeatCount="indefinite" />
+	</line>
+	<line x1="64" y1="50" x2="79" y2="58" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round">
+		<animateTransform attributeName="transform" type="rotate" from="0 64 50" to="360 64 50" dur="3600s" repeatCount="indefinite" />
+	</line>
+
+	<!-- Island silhouette -->
+	<path d="M0,85 L13,81 L26,83 L39,79 L52,82 L64,76 L77,81 L90,80 L103,83 L116,79 L128,82 L128,85 Z" fill="#411AA7" />
+
+	<!-- Left palm tree -->
+	<g transform="translate(32, 85) scale(0.2)">
+		<path d="M0,-80 C5,-95 15,-100 25,-90 C35,-80 30,-65 20,-60 L15,-55 L25,-70 C45,-85 60,-70 50,-55 C40,-40 25,-35 15,-30 L30,-45 C50,-50 60,-30 45,-20 C30,-10 10,-10 0,0 L-5,-15 C-25,-35 -15,-55 0,-45 C15,-35 15,-25 10,-15 L0,-25 C-20,-45 -10,-70 5,-60 C20,-50 15,-35 10,-25 L0,-40 C-10,-60 5,-80 0,-80 Z" fill="#411AA7" />
+		<path d="M0,0 L0,80" stroke="#35147A" stroke-width="12" stroke-linecap="round" />
+	</g>
+
+	<!-- Right palm tree -->
+	<g transform="translate(96, 85) scale(0.2)">
+		<path d="M0,-80 C-5,-95 -15,-100 -25,-90 C-35,-80 -30,-65 -20,-60 L-15,-55 L-25,-70 C-45,-85 -60,-70 -50,-55 C-40,-40 -25,-35 -15,-30 L-30,-45 C-50,-50 -60,-30 -45,-20 C-30,-10 -10,-10 0,0 L5,-15 C25,-35 15,-55 0,-45 C-15,-35 -15,-25 -10,-15 L0,-25 C20,-45 10,-70 -5,-60 C-20,-50 -15,-35 -10,-25 L0,-40 C10,-60 -5,-80 0,-80 Z" fill="#411AA7" />
+		<path d="M0,0 L0,80" stroke="#35147A" stroke-width="12" stroke-linecap="round" />
+	</g>
+
+	<!-- Subtle ocean waves -->
+	<path d="M0,95 C10,94 20,96 30,95 C40,94 50,96 60,95 C70,94 80,96 90,95 C100,94 110,96 120,95" fill="none" stroke="#FFFFFF" stroke-width="0.8" opacity="0.25">
+		<animateTransform attributeName="transform" type="translate" values="0,0; -20,0; 0,0" dur="8s" repeatCount="indefinite" />
+	</path>
+	<path d="M0,100 C10,99 20,101 30,100 C40,99 50,101 60,100 C70,99 80,101 90,100 C100,99 110,101 120,100" fill="none" stroke="#FFFFFF" stroke-width="0.6" opacity="0.2">
+		<animateTransform attributeName="transform" type="translate" values="0,0; -15,0; 0,0" dur="10s" repeatCount="indefinite" />
+	</path>
+
+	<!-- App name with better typography -->
+	<text x="64" y="115" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#FFFFFF" stroke="#000000" stroke-width="0.3" stroke-opacity="0.5">
+		ALARM MAUI
+	</text>
 </svg>

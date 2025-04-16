@@ -13,7 +13,8 @@ namespace Alarm.Data
 		{
 			_database = new SQLiteAsyncConnection(dbPath);
 			_database.CreateTableAsync<AlarmModel>().Wait();
-			_database.CreateTableAsync<TodoItem>().Wait(); // 👈 Add this line
+			_database.CreateTableAsync<TodoItem>().Wait();
+			_database.CreateTableAsync<Note>().Wait();// 👈 Add this line
 		}
 
 		// ALARM METHODS
@@ -38,5 +39,22 @@ namespace Alarm.Data
 
 		public Task<int> DeleteTodoAsync(TodoItem todo) =>
 			_database.DeleteAsync(todo);
+
+		// NOTE METHODS
+		public Task<int> SaveNoteAsync(Note note) =>
+			_database.InsertAsync(note);
+
+		public Task<List<Note>> GetNotesForUserAsync(string userId) =>
+			_database.Table<Note>().Where(n => n.UserId == userId).ToListAsync();
+
+		public Task<int> DeleteNoteAsync(Note note) =>
+			_database.DeleteAsync(note);
+
+		public Task<int> DeleteAllNotesForUserAsync(string userId) =>
+			_database.ExecuteAsync("DELETE FROM Note WHERE UserId = ?", userId);
+
+		// Add this new method for updating notes
+		public Task<int> UpdateNoteAsync(Note note) =>
+			_database.UpdateAsync(note);
 	}
 }
